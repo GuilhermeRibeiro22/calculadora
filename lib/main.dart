@@ -43,37 +43,46 @@ class _CalculadoraHomePageState extends State<CalculadoraHomePage> {
         String expression = equation;
         expression = expression.replaceAll('x', '*');
         expression = expression.replaceAll('÷', '/');
+        expression = expression.replaceAll(',', '.'); 
 
         try {
-          Parser p = Parser();
-          Expression exp = p.parse(expression);
+          if (expression.contains('/0')) {
+            result = "Error";
+          } else {
+            Parser p = Parser();
+            Expression exp = p.parse(expression);
 
-          ContextModel cm = ContextModel();
-          double evalResult = exp.evaluate(EvaluationType.REAL, cm);
-          result = evalResult.toString();
+            ContextModel cm = ContextModel();
+            double evalResult = exp.evaluate(EvaluationType.REAL, cm);
+            result = evalResult.toStringAsFixed(1); 
+          }
         } catch (e) {
           result = "Error";
         }
       } else {
-        if (equation == "0") {
+        if (equation == "0" && buttonText != ',') {
           equation = buttonText;
         } else {
           equation = equation + buttonText;
         }
       }
+      
       if (buttonText != "=") {
-        // Update result in real-time while typing
         String expression = equation;
         expression = expression.replaceAll('x', '*');
         expression = expression.replaceAll('÷', '/');
-
+        expression = expression.replaceAll(',', '.'); 
         try {
-          Parser p = Parser();
-          Expression exp = p.parse(expression);
+          if (expression.contains('/0')) {
+            result = "Error";
+          } else {
+            Parser p = Parser();
+            Expression exp = p.parse(expression);
 
-          ContextModel cm = ContextModel();
-          double evalResult = exp.evaluate(EvaluationType.REAL, cm);
-          result = evalResult.toString();
+            ContextModel cm = ContextModel();
+            double evalResult = exp.evaluate(EvaluationType.REAL, cm);
+            result = evalResult.toStringAsFixed(1); 
+          }
         } catch (e) {
           result = "Error";
         }
@@ -125,16 +134,12 @@ class _CalculadoraHomePageState extends State<CalculadoraHomePage> {
           Row(
             children: <Widget>[
               SizedBox(width: 10),
-
               _buildButtonGrey('AC'),
               SizedBox(width: 10),
-
               _buildButtonGrey('+/-'),
               SizedBox(width: 10),
-
               _buildButtonGrey('%'),
               SizedBox(width: 10),
-
               _buildButtonOrange('÷'),
               SizedBox(width: 10),
             ],
@@ -143,16 +148,12 @@ class _CalculadoraHomePageState extends State<CalculadoraHomePage> {
           Row(
             children: <Widget>[
               SizedBox(width: 10),
-              
               _buildButton('7'),
               SizedBox(width: 10),
-
               _buildButton('8'),
               SizedBox(width: 10),
-
               _buildButton('9'),
               SizedBox(width: 10),
-
               _buildButtonOrange('x'),
               SizedBox(width: 10),
             ],
@@ -161,16 +162,12 @@ class _CalculadoraHomePageState extends State<CalculadoraHomePage> {
           Row(
             children: <Widget>[
               SizedBox(width: 10),
-
               _buildButton('4'),
               SizedBox(width: 10),
-
               _buildButton('5'),
               SizedBox(width: 10),
-
               _buildButton('6'),
               SizedBox(width: 10),
-              
               _buildButtonOrange('-'),
               SizedBox(width: 10),
             ],
